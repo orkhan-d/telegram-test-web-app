@@ -16,6 +16,27 @@ function App() {
         })
 
         WebApp.SettingsButton.show()
+        WebApp.SettingsButton.onClick(() => {
+            WebApp.showPopup(
+                {
+                    title: "Settings",
+                    message: "This is a settings page",
+                    buttons: [
+                        {
+                            type: "default",
+                            text: "Default"
+                        },
+                        {
+                            type: "destructive",
+                            text: "Destructive"
+                        },
+                        {
+                            type: "close"
+                        }
+                    ]
+                }
+            )
+        })
 
         mainButton.enable()
         mainButton.show()
