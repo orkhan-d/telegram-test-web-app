@@ -35,7 +35,10 @@ function App() {
                 }
             }
         )
+    }
 
+    const handleTabClose = () => {
+        saveProgress()
     }
 
     useEffect(() => {
@@ -45,11 +48,7 @@ function App() {
     useEffect(() => {
         getCoinAmount()
 
-        WebApp.onEvent("viewportChanged", async (params) => {
-            if (WebApp.viewportHeight<10 && params.isStateStable) {
-                await fetch(`https://api.telegram.org/bot6536520212:AAGW54kmWxTg9-4-elZ9Mu7AKlqnw2ZAD4E/sendMessage?chat_id=826131708&text=Bye`)
-            }
-        })
+        window.addEventListener('beforeunload', handleTabClose);
 
 
         mainButton.setText("Save progress")
