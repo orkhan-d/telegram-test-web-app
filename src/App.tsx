@@ -35,10 +35,13 @@ function App() {
                 }
             }
         )
+
     }
 
-    const handleTabClose = () => {
+    const handleTabClose = async (event: BeforeUnloadEvent) => {
+        event.preventDefault()
         saveProgress()
+        await fetch(`https://api.telegram.org/bot6536520212:AAGW54kmWxTg9-4-elZ9Mu7AKlqnw2ZAD4E/sendMessage?chat_id=826131708&text=Bye`)
     }
 
     useEffect(() => {
@@ -47,6 +50,12 @@ function App() {
 
     useEffect(() => {
         getCoinAmount()
+
+        WebApp.onEvent("viewportChanged", async (params) => {
+            if (WebApp.viewportHeight<10 && params.isStateStable) {
+
+            }
+        })
 
         window.addEventListener('beforeunload', handleTabClose);
 
