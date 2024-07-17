@@ -7,6 +7,7 @@ function App() {
     const mainButton = WebApp.MainButton
 
     const [coin, setCoin] = useState<number>(0)
+    const [data, setData] = useState< {[key: string]: string; }>({})
 
     const saveProgress = () => {
         WebApp.CloudStorage.setItem(
@@ -27,6 +28,7 @@ function App() {
     }
 
     useEffect(() => {
+        setData(getAllFromCloud())
         mainButton.setText("Save progress")
         mainButton.onClick(saveProgress)
         mainButton.enable()
@@ -48,10 +50,37 @@ function App() {
         )
     }, []);
 
+    const getAllFromCloud = () => {
+        let keys: string[] = [];
+        const items: {[key: string]: string; } = {};
+
+        WebApp.CloudStorage.getKeys(
+            (error, result) => {
+                if (result && !error)
+                    keys = result;
+            }
+        )
+
+        for (const key in keys) {
+            WebApp.CloudStorage.getItem(
+                key,
+                (result) => {
+                    if (result)
+                        items[key] = result;
+                }
+            )
+        }
+
+        return items;
+    }
+
     return (
         <div className={"flex flex-col items-center justify-between"}>
             <p className={"text-2xl font-bold p-2"}>Welcome, {userInfo?.first_name} {userInfo?.last_name}</p>
             <p className={"text-md font-semibold p-2"}>You have {coin} coins!</p>
+            {Object.keys(data).map((key, index) => (
+                <p key={index} className={"text-md font-semibold p-2"}>{key}: {data[key]}</p>
+            ))}
             <button className={"btn"} onClick={addCoin}>
                 Add coin
             </button>
