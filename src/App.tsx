@@ -37,7 +37,7 @@ function App() {
             "coin",
             (error, result) => {
                 if (error) {
-                    WebApp.showPopup("Failed to get coin amount")
+                    WebApp.showAlert("Failed to get coin amount")
                 } else {
                     if (result) {
                         setRemoteCoin(+result)
