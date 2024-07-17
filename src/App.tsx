@@ -10,9 +10,22 @@ function App() {
 
     useEffect(() => {
         mainButton.setText("Get 1 coin")
+        mainButton.showProgress()
         mainButton.onClick( () => {
-            WebApp.CloudStorage.setItem("coin", `${coin + 1}`)
-            setCoin(coin => coin + 1)
+            WebApp.CloudStorage.setItem(
+                "coin", `${coin + 1}`,
+                (error, result) => {
+                    if (error) {
+                        WebApp.showPopup({
+                            title: "Error",
+                            message: "Failed to save coin",
+                        })
+                    } else {
+                        setCoin(coin => coin + 1)
+                    }
+                }
+            )
+            mainButton.hideProgress()
         })
         mainButton.enable()
         mainButton.show()
