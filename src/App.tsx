@@ -7,6 +7,7 @@ function App() {
     const mainButton = WebApp.MainButton
 
     const [coin, setCoin] = useState<number>(0)
+    const [remoteCoin, setRemoteCoin] = useState<number>(0)
     const [data, setData] = useState< {[key: string]: string; }>({})
 
     const saveProgress = () => {
@@ -31,6 +32,24 @@ function App() {
         setCoin(coin => coin + 1)
     }
 
+    const getCoinAmount = () => {
+        WebApp.CloudStorage.getItem(
+            "coin",
+            (error, result) => {
+                if (error) {
+                    WebApp.showPopup("Failed to get coin amount")
+                } else {
+                    if (result) {
+                        setRemoteCoin(+result)
+                        setCoin(+result)
+                    }
+                    WebApp.showAlert("Successfully got coin amount")
+                }
+            }
+        )
+
+    }
+
     useEffect(() => {
         setData(getAllFromCloud())
         mainButton.setText("Save progress")
@@ -38,20 +57,7 @@ function App() {
         mainButton.enable()
         mainButton.show()
 
-        WebApp.CloudStorage.getItem(
-            "coin",
-            (error, result) => {
-                if (error) {
-                    WebApp.showPopup({
-                        title: "Welcome to new app!",
-                        message: "This is a new app, you have no coin yet",
-                    })
-                } else {
-                    if (result)
-                        setCoin(+result)
-                }
-            }
-        )
+        getCoinAmount()
     }, []);
 
     const getAllFromCloud = () => {
