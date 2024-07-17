@@ -12,15 +12,19 @@ function App() {
     const saveProgress = () => {
         WebApp.CloudStorage.setItem(
             "coin", `${coin + 1}`,
-            (error) => {
+            (error, result) => {
                 if (error) {
-                    WebApp.showPopup({
-                        title: "Error",
-                        message: "Failed to save coin",
-                    })
+                    WebApp.showAlert(
+                        "Failed to save coins"
+                    )
                 }
+                WebApp.showPopup({
+                    title: "Info",
+                    message: `Coins${result ? " " : " not"} saved successfully!`,
+                })
             }
         )
+        setData(getAllFromCloud())
     }
 
     const addCoin = () => {
