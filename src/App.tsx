@@ -10,10 +10,10 @@ function App() {
     const [remoteCoin, setRemoteCoin] = useState<number>(0)
     const [data, setData] = useState< {[key: string]: string; }>({})
 
-    const saveProgress = () => {
-        WebApp.showAlert(`Saving ${coin+1} coins`)
+    const saveProgress = (coins: number) => {
+        WebApp.showAlert(`Saving ${coins} coins`)
         WebApp.CloudStorage.setItem(
-            "coin", `${coin + 1}`,
+            "coin", `${coins}`,
             (error, result) => {
                 if (error) {
                     WebApp.showAlert(
@@ -22,16 +22,11 @@ function App() {
                 }
                 WebApp.showPopup({
                     title: "Info",
-                    message: `Coins${result ? " " : " not"} saved successfully!`,
+                    message: `Coins${result ? "" : " not"} saved successfully!`,
                 })
             }
         )
         setData(getAllFromCloud())
-        setRemoteCoin(coin + 1)
-    }
-
-    const addCoin = () => {
-        setCoin(coin => coin + 1)
     }
 
     const getCoinAmount = () => {
@@ -55,7 +50,7 @@ function App() {
     useEffect(() => {
         setData(getAllFromCloud())
         mainButton.setText("Save progress")
-        mainButton.onClick(saveProgress)
+        mainButton.onClick(() => saveProgress(coin))
         mainButton.enable()
         mainButton.show()
 
@@ -92,7 +87,7 @@ function App() {
             <div className={"flex flex-col items-center justify-center space-y-2"}>
                 <p className={"text-md font-semibold p-2"}>You have {coin} coins!</p>
                 <p className={"text-md font-semibold p-2"}>Remote coin amount: {remoteCoin}</p>
-                <button className={"btn"} onClick={addCoin}>
+                <button className={"btn"} onClick={() => setCoin(coin => coin + 1)}>
                     Add coin
                 </button>
             </div>
