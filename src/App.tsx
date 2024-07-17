@@ -10,10 +10,10 @@ function App() {
     const [remoteCoin, setRemoteCoin] = useState<number>(0)
     const [data, setData] = useState< {[key: string]: string; }>({})
 
-    const saveProgress = (coins: number) => {
-        WebApp.showAlert(`Saving ${coins} coins`)
+    function saveProgress()  {
+        WebApp.showAlert(`Saving ${coin} coins`)
         WebApp.CloudStorage.setItem(
-            "coin", `${coins}`,
+            "coin", `${coin}`,
             (error, result) => {
                 if (error) {
                     WebApp.showAlert(
@@ -50,7 +50,7 @@ function App() {
     useEffect(() => {
         setData(getAllFromCloud())
         mainButton.setText("Save progress")
-        mainButton.onClick(() => saveProgress(coin))
+        mainButton.onClick(saveProgress)
         mainButton.enable()
         mainButton.show()
 
