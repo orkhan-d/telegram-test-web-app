@@ -53,7 +53,7 @@ function App() {
     useEffect(() => {
         getCoinAmount()
 
-        WebApp.onEvent("viewportChanged", async (params) => {
+        WebApp.onEvent("viewportChanged", async () => {
             if (WebApp.viewportHeight<0) {
                 handleTabClose()
             }
