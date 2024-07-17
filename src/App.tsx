@@ -1,6 +1,6 @@
 import './App.css'
 import WebApp from "@twa-dev/sdk";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function App() {
     const userInfo = WebApp.initDataUnsafe.user;
@@ -8,14 +8,18 @@ function App() {
 
     const [coin, setCoin] = useState<number>(0)
 
-    mainButton.setText("Get 1 coin")
+    useEffect(() => {
+        console.log(WebApp.version)
+        mainButton.setText("Get 1 coin")
+        mainButton.onClick(() => {
+            setCoin(coin => coin + 1)
+        })
 
-    mainButton.onClick(() => {
-        setCoin(coin => coin + 1)
-    })
+        WebApp.SettingsButton.show()
 
-    mainButton.enable()
-    mainButton.show()
+        mainButton.enable()
+        mainButton.show()
+    }, []);
 
     return (
         <div className={"flex flex-col items-center justify-between"}>
