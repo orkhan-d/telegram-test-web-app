@@ -89,6 +89,7 @@ function App() {
             <p className={"text-2xl font-bold p-2"}>Welcome, {userInfo?.first_name} {userInfo?.last_name}</p>
             <div className={"flex flex-col items-center justify-center space-y-2"}>
                 <p className={"text-md font-semibold p-2"}>You have {coin} coins!</p>
+                <p className={"text-md font-semibold p-2"}>Remote coin amount: {remoteCoin}</p>
                 <button className={"btn"} onClick={addCoin}>
                     Add coin
                 </button>
