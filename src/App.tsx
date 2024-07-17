@@ -9,37 +9,28 @@ function App() {
     const [coin, setCoin] = useState<number>(0)
 
     useEffect(() => {
-        console.log(WebApp.version)
         mainButton.setText("Get 1 coin")
-        mainButton.onClick(() => {
+        mainButton.onClick( () => {
+            WebApp.CloudStorage.setItem("coin", `${coin + 1}`)
             setCoin(coin => coin + 1)
         })
-
-        WebApp.SettingsButton.show()
-        WebApp.SettingsButton.onClick(() => {
-            WebApp.showPopup(
-                {
-                    title: "Settings",
-                    message: "This is a settings page",
-                    buttons: [
-                        {
-                            type: "default",
-                            text: "Default"
-                        },
-                        {
-                            type: "destructive",
-                            text: "Destructive"
-                        },
-                        {
-                            type: "close"
-                        }
-                    ]
-                }
-            )
-        })
-
         mainButton.enable()
         mainButton.show()
+
+        WebApp.CloudStorage.getItem(
+            "coin",
+            (error, result) => {
+                if (error) {
+                    WebApp.showPopup({
+                        title: "Welcome to new app!",
+                        message: "This is a new app, you have no coin yet",
+                    })
+                } else {
+                    if (result)
+                        setCoin(+result)
+                }
+            }
+        )
     }, []);
 
     return (
