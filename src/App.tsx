@@ -11,6 +11,7 @@ function App() {
     const [data, setData] = useState< {[key: string]: string; }>({})
 
     const saveProgress = () => {
+        WebApp.showAlert(`Saving ${coin+1} coins`)
         WebApp.CloudStorage.setItem(
             "coin", `${coin + 1}`,
             (error, result) => {
@@ -26,6 +27,7 @@ function App() {
             }
         )
         setData(getAllFromCloud())
+        setRemoteCoin(coin + 1)
     }
 
     const addCoin = () => {
