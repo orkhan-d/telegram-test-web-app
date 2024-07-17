@@ -14,7 +14,7 @@ function App() {
         mainButton.onClick( () => {
             WebApp.CloudStorage.setItem(
                 "coin", `${coin + 1}`,
-                (error, result) => {
+                (error) => {
                     if (error) {
                         WebApp.showPopup({
                             title: "Error",
