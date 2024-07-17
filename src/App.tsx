@@ -1,19 +1,21 @@
 import './App.css'
 import WebApp from "@twa-dev/sdk";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 function App() {
     const userInfo = WebApp.initDataUnsafe.user;
     const mainButton = WebApp.MainButton
 
     const [coin, setCoin] = useState<number>(0)
+    const coinRef = useRef(coin);
+
     const [remoteCoin, setRemoteCoin] = useState<number>(0)
     const [data, setData] = useState< {[key: string]: string; }>({})
 
     function saveProgress()  {
-        WebApp.showAlert(`Saving ${coin} coins`)
+        WebApp.showAlert(`Saving ${coinRef.current} coins`)
         WebApp.CloudStorage.setItem(
-            "coin", `${coin}`,
+            "coin", `${coinRef.current}`,
             (error, result) => {
                 if (error) {
                     WebApp.showAlert(
@@ -48,7 +50,12 @@ function App() {
     }
 
     useEffect(() => {
+        coinRef.current = coin
+    }, [coin]);
+
+    useEffect(() => {
         setData(getAllFromCloud())
+
         mainButton.setText("Save progress")
         mainButton.onClick(saveProgress)
         mainButton.enable()
