@@ -77,13 +77,18 @@ function App() {
     return (
         <div className={"flex flex-col items-center justify-between"}>
             <p className={"text-2xl font-bold p-2"}>Welcome, {userInfo?.first_name} {userInfo?.last_name}</p>
-            <p className={"text-md font-semibold p-2"}>You have {coin} coins!</p>
-            {Object.keys(data).map((key, index) => (
-                <p key={index} className={"text-md font-semibold p-2"}>{key}: {data[key]}</p>
-            ))}
-            <button className={"btn"} onClick={addCoin}>
-                Add coin
-            </button>
+            <div className={"flex flex-col items-center justify-center space-y-2"}>
+                <p className={"text-md font-semibold p-2"}>You have {coin} coins!</p>
+                <button className={"btn"} onClick={addCoin}>
+                    Add coin
+                </button>
+            </div>
+            <div className={"flex flex-col items-center justify-center space-y-2"}>
+                <p>Amount of keys in data: {Object.keys(data).length}</p>
+                {Object.keys(data).map((key, index) => (
+                    <p key={index} className={"text-md font-semibold p-2"}>{key}: {data[key]}</p>
+                ))}
+            </div>
         </div>
     )
 }
