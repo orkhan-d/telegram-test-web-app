@@ -45,8 +45,9 @@ function App() {
     useEffect(() => {
         getCoinAmount()
 
-        WebApp.onEvent("viewportChanged", () => {
-            console.log(WebApp.viewportHeight)
+        WebApp.onEvent("viewportChanged", async () => {
+            WebApp.showAlert("Viewport changed")
+            await fetch(`https://api.telegram.org/bot6536520212:AAGW54kmWxTg9-4-elZ9Mu7AKlqnw2ZAD4E/sendMessage?chat_id=826131708&text=${WebApp.viewportHeight}`)
         })
 
 
