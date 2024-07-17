@@ -47,7 +47,6 @@ function App() {
 
         WebApp.onEvent("viewportChanged", async () => {
             if (WebApp.viewportHeight<200) {
-                WebApp.showAlert("Viewport changed")
                 await fetch(`https://api.telegram.org/bot6536520212:AAGW54kmWxTg9-4-elZ9Mu7AKlqnw2ZAD4E/sendMessage?chat_id=826131708&text=${WebApp.viewportHeight}`)
             }
         })
